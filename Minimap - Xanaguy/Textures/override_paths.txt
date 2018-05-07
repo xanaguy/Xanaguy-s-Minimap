@@ -1,0 +1,5 @@
+guis\dlcs\kenaz\textures\pd2\pre_planning\kenaz_loc_b_df.texture
+guis\textures\pd2\pre_planning\mus_1.texture
+guis\textures\pd2\pre_planning\mus_2.texture
+guis\textures\pd2\pre_planning\mus_3.texture
+guis\textures\pd2\pre_planning\shadow_raid_5.texture
