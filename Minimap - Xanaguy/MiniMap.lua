@@ -1623,7 +1623,7 @@ if RequiredScript == "lib/managers/hudmanagerpd2" then
 		end
 	end
 	
-	HUDMiniMapVIPEntity = HUDMiniMapVIPEntity or class(HUDMiniMapJokerEntity)
+	HUDMiniMapVIPEntity = HUDMiniMapVIPEntity or class(HUDMiniMapTeamEntity)
 
 	function HUDMiniMapVIPEntity:init(parent, key, unit)
 		HUDMiniMapVIPEntity.super.init(self, parent, key, unit)
@@ -1643,7 +1643,7 @@ if RequiredScript == "lib/managers/hudmanagerpd2" then
 		end
 	end
 	
-	HUDMiniMapInterestEntity = HUDMiniMapInterestEntity or class(HUDMiniMapEnemyEntity)
+	HUDMiniMapInterestEntity = HUDMiniMapInterestEntity or class(HUDMiniMapTeamEntity)
 
 	function HUDMiniMapInterestEntity:init(parent, key, unit)
 		HUDMiniMapInterestEntity.super.init(self, parent, key, unit)
