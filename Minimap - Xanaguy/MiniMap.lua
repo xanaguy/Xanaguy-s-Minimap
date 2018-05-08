@@ -733,7 +733,7 @@ if RequiredScript == "lib/managers/hudmanagerpd2" then
 		},
 		mark_unit_dangerous = {
 			class = "HUDMiniMapSWATTurretEntity",
-			duration = 60,
+			ignore = true,
 		},
 		friendly = {
 			class = "HUDMiniMapJokerEntity",
@@ -747,14 +747,17 @@ if RequiredScript == "lib/managers/hudmanagerpd2" then
 		taxman = {
 			class = "HUDMiniMapInterestEntity",
 			ignore_duration = true,
+			delete_prior = true,
 		},	
 		drunk_pilot = {
 			class = "HUDMiniMapInterestEntity",
 			ignore_duration = true,
+			delete_prior = true,
 		},		
 		highlight_character = {
 			class = "HUDMiniMapInterestEntity",
 			ignore_duration = true,
+			delete_prior = true,
 		},	
 	}
 	
@@ -1411,7 +1414,7 @@ if RequiredScript == "lib/managers/hudmanagerpd2" then
 	HUDMiniMapWaypointEntity = HUDMiniMapWaypointEntity or class(HUDMiniMapEntity)
 	
 	function HUDMiniMapWaypointEntity:init(parent, key, data)
-		HUDMiniMapWaypointEntity.super.init(self, parent, key, { w = 10, h = 10, same_elevation_only = data.same_elevation_only })
+		HUDMiniMapWaypointEntity.super.init(self, parent, key, { w = 12, h = 12, same_elevation_only = data.same_elevation_only })
 		
 		local texture, texture_rect
 		if data.icon then
@@ -1611,7 +1614,7 @@ if RequiredScript == "lib/managers/hudmanagerpd2" then
 		HUDMiniMapJokerEntity.super.update(self, ...)
 		
 		if not self._deleted and self._is_escort and self._unit:anim_data().drop then
-			self:_delete()
+			self._delete()
 			elseif not self._deleted then
 			if self._unit:character_damage() and self._unit:character_damage():dead() then
 				self:_delete()
@@ -1640,7 +1643,7 @@ if RequiredScript == "lib/managers/hudmanagerpd2" then
 		end
 	end
 	
-	HUDMiniMapInterestEntity = HUDMiniMapInterestEntity or class(HUDMiniMapJokerEntity)
+	HUDMiniMapInterestEntity = HUDMiniMapInterestEntity or class(HUDMiniMapEnemyEntity)
 
 	function HUDMiniMapInterestEntity:init(parent, key, unit)
 		HUDMiniMapInterestEntity.super.init(self, parent, key, unit)
@@ -1676,6 +1679,7 @@ if RequiredScript == "lib/managers/hudmanagerpd2" then
 		if not self._deleted then
 			if self._unit:character_damage() and self._unit:character_damage():dead() then
 				self:_delete()
+				return
 			end
 		end
 	end
@@ -1749,6 +1753,7 @@ if RequiredScript == "lib/units/civilians/civilianbase" then
 	 if managers.hud._hud_minimap then
 		managers.hud._hud_minimap:add_entity(HUDMiniMapCivilianEntity, self._unit:key(), self._unit)
 		end
+		
 		return post_init(self, ...)
 	end
 	
@@ -1809,7 +1814,7 @@ if RequiredScript == "lib/units/contourext" then
 				managers.hud._hud_minimap:delete_entity(key)
 			end
 			
-			local entity = managers.hud._hud_minimap:add_entity(entity_data.class, key, self._unit)
+			local entity = managers.hud._hud_minimap:add_entity(entity_data.class, self._unit:key(), self._unit)
 			local duration = entity_data.duration or 
 				(not entity_data.ignore_duration and setup.fadeout_t and (setup.fadeout_t - TimerManager:game():time()))
 			
@@ -1826,12 +1831,12 @@ end
 
 if RequiredScript == "lib/managers/hudmanager" then
 
-   --[[ local add_waypoint = HUDManager.add_waypoint
+   local add_waypoint = HUDManager.add_waypoint
     local remove_waypoint = HUDManager.remove_waypoint
 
     function HUDManager:add_waypoint(id, data, ...)
         add_waypoint(self, id, data, ...)
-        if string.sub(tostring(id), 1, 5) ~= "susp1" then
+        if string.sub(tostring(id), 1, 5) ~= "susp1" and managers.hud._hud_minimap then
             managers.hud._hud_minimap:add_entity(HUDMiniMapWaypointEntity, tostring(id), { unit = data.unit, position = data.position, icon = data.icon or "wp_standard", show_offscreen = true })
         end
     end
@@ -1839,6 +1844,6 @@ if RequiredScript == "lib/managers/hudmanager" then
     function HUDManager:remove_waypoint(id, ...)
         remove_waypoint(self, id, ...)
         managers.hud._hud_minimap:delete_entity(tostring(id))
-    end--]]
+    end
 
 end
