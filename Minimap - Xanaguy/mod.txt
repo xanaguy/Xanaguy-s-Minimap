@@ -1,6 +1,6 @@
 {
-	"name": "MiniMap",
-	"description": "Minimap showing player, team and marked enemies for heists with a preplanning map and a subset of other maps with custom minimap textures",
+	"name": "Xanaguy's Minimap",
+	"description": "An advanced minimap showing all available entities for heists with a preplanning map, a subset of other maps with custom minimap textures, and blanks.",
 	"hooks": [
 		{ "hook_id": "lib/managers/hudmanagerpd2", "script_path": "MiniMap.lua" },
 		{ "hook_id": "lib/managers/criminalsmanager", "script_path": "MiniMap.lua" },
