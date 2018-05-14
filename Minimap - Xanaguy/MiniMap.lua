@@ -3,7 +3,7 @@ if RequiredScript == "lib/managers/hudmanagerpd2" then
 	HUDMiniMap = HUDMiniMap or class()
 
 	HUDMiniMap.SIZE = { 250, 250 }	--Map panel width/height
-	HUDMiniMap.DEFAULT_RADIUS = 2500	--Map unit "radius" from player
+	HUDMiniMap.DEFAULT_RADIUS = 3000	--Map unit "radius" from player
 	HUDMiniMap.SHOW_BLANK_MAP = true	--Show minimap even if no texture exists for current level
 	
 	HUDMiniMap.DEBUG = false	--Debug/map-making stuff
